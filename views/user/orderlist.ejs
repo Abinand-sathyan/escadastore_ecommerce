@@ -1,0 +1,56 @@
+<%- include('partials/userheader.ejs') %>
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/user/images/bg-01.jpg');margin-top: 6rem;">
+    <h2 class="ltext-105 cl0 txt-center">
+       Order list 
+    </h2>
+  </section>
+  <% if (orderdetials.length>0) { %>
+<table class="table align-middle mb-0 bg-white" style="    margin-top: 4rem;margin-bottom:  4rem !IMPORTANT">
+    <thead class="bg-light">
+      <tr>
+        
+        <th> Order ID</th>
+        <th> Payment method</th>
+        <th> Amount</th>
+        <th> Status</th>
+        <th> Date </th>
+        <th> Details</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% for( let i = 0; i < orderdetials.length; i++ ) { %>
+        <tr>
+            
+                <td><%- orderdetials[i]._id %>  </td>
+                <td> <%- orderdetials[i].paymentMethod %> </td>
+                <td> <%- orderdetials[i].total %></td>
+                <% if (orderdetials[i].orderStatus =="Cancelled"&&orderdetials[i].orderStatus =="Returned") { %>
+                <td style="color: red;"> <%- orderdetials[i].orderStatus %></td>
+                <% } else { %>
+                  <td style="color: green;"> <%- orderdetials[i].orderStatus %></td>
+                <% } %>
+               
+                <td> <%- orderdetials[i].createdAt.toLocaleDateString() %> </td>
+                <td>
+                <a href="orderdetails/<%-orderdetials[i]._id %>"><button type="button" class="btn btn-outline-success">View</button></a>
+                </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <% } else { %>
+  <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12 mt-5">
+          <div>
+            <img src="/productImages/678caef6068a976e4a0d94bbdba6b660.webp" alt="" width="50%" />
+            <h2 style="color: red">No Order yet</h2>
+          </div>
+            <div>
+            <a class="btn btn-success my-3" href="/">Start Shopping</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>  
+<%- include('partials/userfooter.ejs') %>

@@ -1,0 +1,74 @@
+<%- include('partials/adminheader.ejs') %>
+<div class="row">
+    <a href="/admin/getaddproduct" style="width: 100%; "><button type="button" class="btn btn-primary" style="width: 100%;height: 3rem;">Add Product</button></a>
+    </div>
+  <div class="row ">
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Product List</h4>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                  <tr>
+                  <th> Product Name</th>
+                  <th> Quantity</th>
+                  <th> Discription</th>
+                  <th> prize</th>
+                  <th> size</th>
+                  <th> color</th>
+                  <th> category</th>
+                  <th> offer</th>
+                  <th> discount prize</th>
+                  <th> Main image</th>
+                  <th> Sub image1</th>
+                  <th>Sub image2</th>
+                  <th>Sub image3</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% for( let i = 0; i<ProductDetails.length; i++ ) { %>
+                  <tr>
+                    <td><%- ProductDetails[i].ProductName %>  </td>
+                    <td><%- ProductDetails[i].quantity %>  </td>
+                    <td> <%- ProductDetails[i].Discription %> </td>
+                    <td> <%- ProductDetails[i].Prize %></td>
+                    <td> <%- ProductDetails[i].Size %> </td>
+                    <td> <%- ProductDetails[i].Color %> </td>
+                    <td> <%- ProductDetails[i].Category %> </td>
+                    
+                    <% if (ProductDetails[i].offer) { %>
+                      <td> <%- ProductDetails[i].offer %><span>%</span></td>
+                      <% } else { %>
+                        <td>No offer</td>
+                    <% } %>
+                    
+                    
+                    <% if (ProductDetails[i].discountPrice) { %>
+                      <td> <%- ProductDetails[i].discountPrice %></td>
+                      <% } else { %>
+                        <td>No discount</td>
+                    <% } %>
+                    
+                    
+                    
+                    <td> <img src="/images/<%-ProductDetails[i].ImageURL[0] %>"></td>
+                    <td> <img src="/images/<%-ProductDetails[i].ImageURL[1] %>"></td>
+                    <td> <img src="/images/<%-ProductDetails[i].ImageURL[2] %>"></td>
+                    <td> <img src="/images/<%-ProductDetails[i].ImageURL[3] %>"></td>
+                    <td>
+                    <a href="/admin/productDelete/<%-ProductDetails[i]._id %>"><button type="button" class="btn btn-outline-danger">Delete</button></a>
+                    </td>
+                    <td>
+                      <a href="/admin/getproductedit/<%- ProductDetails[i]._id %>"><button type="button" class="btn btn-outline-success">Edit</button></a>
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<%- include('partials/adminfooter.ejs') %>

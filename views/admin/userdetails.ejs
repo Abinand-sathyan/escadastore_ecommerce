@@ -1,0 +1,59 @@
+<%- include('partials/adminheader.ejs') %>
+<div class="row" style="margin-right: 2.25rem;">
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">user details</h4>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th> email </th>
+                  <th> phone number </th>
+                  <th> status </th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% for( let i = 0; i < userdetails.length; i++ ) {%>
+
+                <tr>
+                  <!-- <td>
+                    <div class="form-check form-check-muted m-0">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input">
+                      </label>
+                    </div>
+                  </td> -->
+               <td>
+                <% if (userdetails[i].block==true) { %>
+                  <img src="/admin/assets/images/faces/face1.png" alt="image" />
+                  <% } else { %>
+                    <img src="/admin/assets/images/faces/images.png" alt="image" />
+                    <% } %>
+                  <span class="pl-2"><%-userdetails[i].first_name %></span>
+                  </td>
+                  <td> <%-userdetails[i].email_address%></td>
+                  <td> <%-userdetails[i]. mobile_number%></td>
+                  <!-- <td> Dashboard </td> -->
+                  <!-- <td> Credit card </td>
+                  <td> 04 Dec 2019 </td> -->
+                  <% if (userdetails[i].block==true) { %>
+                  <td>
+                    <div class="badge badge-outline-success"><a href="/admin/block/<%- userdetails[i]._id %>">block</a></div> 
+                  </td>
+                  <% } else { %>
+                  <td>
+                    <div class="badge badge-outline-danger" ><a style="color: red;" href="/admin/unblock/<%- userdetails[i]._id %>">unblock</a></div> 
+                  </td>
+                  <% } %>
+                </tr>
+                <% } %>
+               </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include('partials/adminfooter.ejs') %>

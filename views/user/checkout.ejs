@@ -1,0 +1,400 @@
+<%- include('partials/userheader.ejs') %>
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/user/images/bg-01.jpg');margin-top: 6rem;">
+  <h2 class="ltext-105 cl0 txt-center">
+     checkout
+  </h2>
+</section>
+ 
+
+<div id="wrapper" class="row">
+  
+  <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1" style="    padding-left: 7rem;font-size: 34px;">
+    Billing details
+  </h2>
+  <br>
+  <h4 class="ltext-201 cl2 p-t-19 p-b-43 respon1" style="    padding-left: 7rem;font-size: 25px;">
+  Select address
+  </h4>
+
+  <div class="col-12 col-md-6">
+    <div class="card h-100">
+        <div class="card-body">
+            <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h6 class="mb-2" style="color:#717fe0" >Personal details</h6>
+                  </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="fullName">Name</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="Enter full name" value="<%=user.first_name %>">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="eMail">Email</label>
+                        <input type="email" class="form-control" id="eMail" placeholder="Enter email ID"  value="<%=user.email_address %>">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" id="phone" placeholder="Enter phone number" value="<%=user.mobile_number %>">
+                    </div>
+                </div>
+                 </div>
+                 <% if (address.length) { %>
+                 <p>
+                    <a class="btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="background-color: rgb(113, 127, 224);color:white">
+                      Address
+                    </a>
+                </p>
+                <div class="collapse" id="collapseExample" style="padding-top: 1rem;">
+                    <% for( let i = 0; i < address.length; i++ ) { %>
+                    <div class="card card-body">
+                      <li><input name="address" id="<%= address[i]._id %>" class="radio" type="radio" value="<%= i %> " ></li>
+                      <h5><b><li><%= address[i].Fname %></li></b></h5>
+                       <li>Address:<%= address[i].Addressline %> </li>
+                       <li><%= address[i].city %> </li>
+                       <li><%= address[i].State %> </li>
+                       <li><%= address[i].Country %> </li>
+                       <li><%= address[i].Pincode %> </li> 
+                   </div>
+
+                    <% } %>
+                  </div>
+                  
+            
+            <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="text-right">
+                        <!-- <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button> -->
+                       <a href="address"><button type="button" id="submit" name="submit" class="btn btn-primary" style="background-color: #717fe0;">Add new address</button></a>
+                    </div>
+                </div>
+            </div>
+            <% } else { %>
+                <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="text-right">
+                            <!-- <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button> -->
+                           <a href="address"><button type="button" id="submit" name="submit" class="btn btn-primary" style="background-color: #717fe0;">Add address</button></a>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+            <div class="form-outline mb-4">
+                <input type="text" id="form3Example8" class="form-control form-control-lg" name="Addressline" style="margin-top: 2rem;" />
+                <label class="form-label" for="form3Example8">Enter coupen number</label>
+              </div>
+              <p class="pl-5" id="CouponError"></p>
+              <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="text-right">
+                       <button type="button" id="submit1" name="submit" 
+                        class="btn btn-primary" style="background-color: #717fe0;" onclick="verifycoupons('<%=cartitems.totalCart %>')">Apply Coupon</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  
+	<div id="container" class="col-12 col-md-6 d-flex" style="height: 100%;">
+    <div id="left-col">
+			<div id="left-col-cont" class="ltext-201">
+        
+				<h2>Summary</h2>
+                </div>
+                <div id="left-col-cont">
+        <% for ( cart of cartitems.items) { %>
+				<div class="item">
+					<div class="img-col">
+						<img src="images/<%= cart.productDedtails.ImageURL[0]  %>" alt="" />
+					</div>
+					<div class="meta-col">
+						<h3><%= cart.productDedtails.ProductName %></h3>
+						<p class="price"><%= cart.productDedtails.Prize %><span>  x  </span><%= cart.quantity %> </p>
+					</div>
+				</div>
+		
+        <% } %>
+        
+        <p id="total1">Discount</p><h5 id="discount"><span>₹</span>0</h5>
+		    <p id="total2"> sub Total</p><h5><span>₹</span> <%=cartitems.totalCart %> </h5>
+				<p id="total3">Total</p>
+				<h5 id="total-price"><span>₹</span> <%=cartitems.totalCart %> </h5>
+      
+			</div>
+		</div>
+   <div id="right-col">
+    <div id="left-col-cont" class="ltext-201">
+        <h4>Payment method</h4>
+        </div>
+        <div id="right-col">
+			<div id="logotype">
+				<img id="mastercard" src="http://emilcarlsson.se/assets/MasterCard_Logo.png" alt="" style="margin-top: -115px;" />
+			</div>
+			
+			<form action="">
+				<!-- <button id="paypal"><i class="fa fa-paypal" aria-hidden="true"></i> Pay with PayPal</button>
+				<button id="purchase">Purchase</button> -->
+               
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" id="Razorpay"  value="Razorpay" name="paymentMethod"> Razorpay</label>
+                        <img src="/user/images/icons/icon-pay-02.png" alt="ICON-PAY">
+                        </a>
+                      </a>
+											</div>
+										</div>
+									</div>
+
+                  <div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" id="Razorpay"  value="paypal" name="paymentMethod"> paypal</label>
+                         <img src="/user/images/icons/icon-pay-01.png" alt="ICON-PAY">
+											</div>
+										</div>
+									</div>
+
+
+                  <div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" id="Cash-On-Delivery" value="cash on delivery"  name="paymentMethod">Cash on Delivery</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" id="wallet"  value="Wallet" name="paymentMethod">wallet</label>
+											</div>
+										</div>
+									</div>
+				
+				
+			</form>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn" style="background-color: #717fe0; color: antiquewhite;" onclick="placeOrder()">
+                    Place an order <%=purchasErr %> 
+                </button>
+                <div id="paypal-button-container"></div>
+                </div>
+               </div>
+              </div>
+		</div>
+        <% if(purchasErr.length>0){ %> 
+            <div class=" alert alert-danger col-md-12 text-center" role="alert">
+              <p class="text-danger"><%=purchasErr %> </p>
+            </div>
+              <% } %> 
+	</div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.2.js" integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=<%= paypalclientid %>" data-namespace="paypal_sdk"></script>
+<script>
+  var couponcode;
+
+async function verifycoupons(subtotal)
+  {
+    couponcode=document.getElementById("form3Example8").value;
+    let total=subtotal;
+    console.log(couponcode,total,"theeeee");
+    if(couponcode == "")
+    {
+        console.log("tgeeeeeeeeeeeeeeeeeeeeeeeeeee");
+        document.getElementById("CouponError").style.color="red";
+        document.getElementById("CouponError").innerHTML="Enter a couppon code";
+
+        
+    }else{
+        const response = await axios({
+            method : 'post',
+			         url : '/verifycoupon',
+			       data  : {
+                    total,couponcode
+
+	 	              	}
+         }).then((response)=>{
+          console.log(response);
+          if(response.data.status==true){
+           console.log(response.data.grandtotal);
+           document.getElementById("CouponError").style.color="green";
+           document.getElementById("CouponError").innerHTML="Coupon applied successfully";
+           document.getElementById("discount").innerHTML=response.data.cutOff;
+           document.getElementById("total-price").innerHTML=response.data.grandtotal;
+           document.getElementById("submit1").style.display="none";
+          }else{
+            console.log(response.data.coupnMsg);
+          document.getElementById("CouponError").style.color="red";
+          document.getElementById("CouponError").innerHTML=response.data.coupnMsg;
+         
+          }
+         })
+    }
+  }
+
+
+
+ 
+ 
+  async function placeOrder(){
+    const index = $('input[type="radio"][name="address"]:checked').val();
+		const paymode = $('input[type="radio"][name="paymentMethod"]:checked').val();
+    const coupon=document.getElementById("discount").innerHTML 
+    const total=document.getElementById("total-price").innerHTML 
+
+    console.log(index,paymode);
+	
+    const response = await axios({
+            method : 'post',
+			         url : '/checkout',
+			       data  : {
+                       index,paymode,coupon,total
+                     }
+         }).then(async(respone)=>{
+          console.log(respone);
+             
+
+ if(respone.data.cashONdelivery){
+  Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Your order has been placed',
+  showConfirmButton: false,
+  confirmButtonText:"Order successfully",
+  timer: 2000
+}).then(()=>{
+  location.href("/products")
+})
+
+  }else if(respone.data.paypal){
+      console.log("fdgfdg");
+              userOrderData = respone.data.userOrderData
+                        walletBalance = respone.data.userorederdata
+                        amount = respone.data.balancepayment
+                        
+                       
+                            
+                        paypal_sdk.Buttons({
+                            createOrder: function () {
+                                return fetch("/create-order", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                        items: [
+                                            {
+                                                id: 1,
+                                                amount:amount,
+                                            },
+                                            { id: 2, amount:amount},
+                                        ],
+                                    }),
+                                }).then(res => {
+                                    if (res.ok) return res.json()
+                                    console.log(res.json());
+                                    return res.json().then(json => Promise.reject(json))
+                                }).then(({ id }) => {
+                                    console.log("pp");
+                                    return id
+                                }).catch(e => {
+                                    console.error(e)
+                                })
+                            },
+                            onApprove: function (data, actions) {
+                                console.log(data);
+                                console.log(actions);
+                                return actions.order.capture().then(function (details) {
+                                    verifyPayment(respone)
+                                   
+                                })
+                            }
+                        }).render('#paypal-button-container');
+            
+        }
+            
+            else if(respone.data.noBalance){
+              Swal.fire({
+  position: 'center',
+  icon: 'error',
+  title: 'wallet empty',
+  showConfirmButton: false,
+  confirmButtonText:"Order successfully",
+  timer: 2000
+}).then(()=>{
+  location.href("/products")
+})}
+               else if(respone.data.Wallet){
+                Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Your order has been placed',
+  showConfirmButton: false,
+  confirmButtonText:"Order successfully",
+  timer: 2000
+}).then(()=>{
+  location.href("/products")
+})
+
+               }else if(respone.data.chooseaddress || respone.data.choosepay){
+                Swal.fire({
+  position: 'center',
+  icon: 'error',
+  title: 'choose address or paymentmethod',
+  showConfirmButton: false,
+  confirmButtonText:"Order successfully",
+  timer: 2000
+}).then(()=>{
+  location.href("/products")
+})
+
+  }
+})}
+
+
+
+
+
+
+ async function verifyPayment(verifydata){
+  const response = await axios({
+            method : 'post',
+			         url : '/veryfypayment',
+			       data  : {
+              verifydata,
+              amount,
+              walletBalance,
+              userOrderData,
+              couponcode
+                     }
+         }).then((respone)=>{
+          if(respone.data.status)
+          Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Your order has been placed',
+  showConfirmButton: false,
+  confirmButtonText:"Order successfully",
+  timer: 2000
+}).then(()=>{
+  location.href("/products")
+})
+
+         })
+
+}
+</script>
+<%- include('partials/userfooter.ejs') %>
+
+

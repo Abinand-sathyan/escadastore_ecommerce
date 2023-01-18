@@ -1,0 +1,24 @@
+<%- include('partials/adminheader.ejs') %>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Add Category</h4>
+      <form class="forms-sample" action="/admin/postaddcategory" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="exampleInputName1">category name</label>
+            <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" name="categoryname" >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName1">Offer</label>
+            <input type="Number" class="form-control" id="exampleInputName1" placeholder="offer" name="offer" >
+          </div>
+        <div class="form-group" style="margin-top: 2rem;" >
+          <label for="formFileSm" class="form-label">category image</label>
+          <input class="form-control form-control-sm" id="formFileSm" type="file" name="ImageURL" style="height: 3rem;" multiple/>
+        </div>
+        <button type="submit" class="btn btn-primary mr-2" style="margin-left:0vh;margin-top:2rem;">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <%- include('partials/adminfooter.ejs') %>

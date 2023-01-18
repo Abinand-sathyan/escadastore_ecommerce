@@ -1,0 +1,123 @@
+<%- include('partials/adminheader.ejs') %>
+<!-- <div class="row">
+    <a href="/admin/getaddproduct" style="width: 100%; "><button type="button" class="btn btn-primary" style="width: 100%;height: 3rem;">Add Product</button></a>
+    </div> -->
+  <div class="row ">
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Oreder list</h4>
+          <div class="table-responsive">
+            
+        <table class="table">
+              <thead>
+                  <tr>
+                  <th> Client</th>
+                  <th>Order ID</th>
+                  <th> Payment method</th>
+                  <th>Amount</th>
+                  <th> Status</th>
+                  <th>Date</th>
+                  <th>Details</th>
+                 </tr>
+              </thead>
+              <tbody>
+                <% for( let i = 0; i<orderdetials.length; i++ ) { %>
+                  <tr>
+                    <td><%- orderdetials[i].UserId.first_name %>  </td>
+                    <td><%- orderdetials[i]._id %>  </td>
+                    <td> <%- orderdetials[i].paymentMethod %> </td>
+                    <td> <%- orderdetials[i].total %></td>
+                    <td> 
+                      <% if (orderdetials[i].orderStatus!="Cancelled"
+                    &&orderdetials[i].orderStatus!="Delivered"
+                    &&orderdetials[i].orderStatus!="Returned" ) { %>
+                      <select 
+                      class="form-control" 
+                      name="orderStatus"
+                      id="track<%= i %>"
+                      >
+                      <option value="<%= orderdetials[i].orderStatus %>" selected>
+                    <%= orderdetials[i].orderStatus %>
+                  </option>
+               
+                  <option  value="Cancelled"> Cancelled</option>
+                  <option value="orderconfirmed">orderconfirmed</option>
+                  <option value="Shipped">Shipped</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Returned">Returned</option>
+                  <option value="Out For Delivery">Out For Delivery</option>
+              </select>
+              <button type="button" 
+              class="btn btn-outline-danger"
+              onclick="orderstatus('<%= orderdetials[i]._id%>','<%= i%>')"
+              >Update</button>
+              <%} else {%>
+                 <%- orderdetials[i].orderStatus %>
+                    <% } %> 
+                    </td>
+                    <td> <%- orderdetials[i].createdAt.toLocaleDateString() %> </td>
+                    <td>
+                    <a href="/admin/orderdetails/<%-orderdetials[i]._id %>"><button type="button" class="btn btn-outline-success">View</button></a>
+                    </td>
+                  </tr>
+                  <% } %>
+
+                </tbody>
+            </table>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script
+  type="text/javascript"
+  src="https://code.jquery.com/jquery-1.7.1.min.js">
+  </script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+  integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer">
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function orderstatus(e,i){
+    console.log(e,i);
+    const orderId = e;
+    const value = $(`#track${i}`).find(":selected").val();
+    console.log(orderId,value);
+
+    $.ajax({
+      url:"/admin/orderstatus",
+      data:{
+        orderId,
+        value   
+      },
+      method: "post",
+      success:(response)=>{
+        if(response.status){
+      const Toast = Swal.mixin({
+  toast: true,
+  position: 'center',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+  icon: 'success',
+  title: 'order updated successfully'
+}).then(()=>{
+   window.location.reload();
+    });
+    }
+  },
+})
+  }
+  </script>
+<%- include('partials/adminfooter.ejs') %>

@@ -1,0 +1,51 @@
+<%- include('partials/adminheader.ejs') %>
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Edit category</h4>
+      <form
+        class="forms-sample"
+        action="/admin/posteditcategory/<%- editdata._id %>"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="form-group">
+          <label for="exampleInputName1">category name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputName1"
+            name="categoryname"
+            value="<%- editdata.CategoryName %>"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputName1">category name</label>
+          <input
+            type="number"
+            class="form-control"
+            id="exampleInputName1"
+            name="offer"
+            value="<%- editdata.CategoryName %>"
+          />
+        </div>
+        <div class="form-group" style="margin-top: 2rem">
+          <label for="formFileSm" class="form-label">category image</label>
+          <img style=" width: 10rem; height: 14rem; padding-top: 3rem;"src="/images/<%- editdata.ImageURL[0].filename %>">
+        </div>
+        <div class="form-group" style="margin-top: 2rem;" >
+          <label for="formFileSm" class="form-label"> Edit category image</label>
+          <input class="form-control form-control-sm" id="formFileSm" type="file" name="ImageURL" style="height: 3rem;" multiple/>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary mr-2"
+          style="margin-left: 0vh; margin-top: 2rem"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('partials/adminfooter.ejs') %>

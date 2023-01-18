@@ -1,0 +1,61 @@
+<%- include('partials/adminheader.ejs') %>
+<div class="row">
+  <a href="/admin/getaddcategory" style="width: 100%; "><button type="button" class="btn btn-primary" style="width: 100%;height: 3rem;">dey report</button></a>
+  </div>
+<div class="row ">
+  <div class="col-12 grid-margin" id="order">
+    <div class="card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">Sales report</h4> -->
+        <div class="table-responsive">
+            <div style="display: inherit;">
+                <button type="button" class="btn btn-outline-danger" id="download-button">PDf</button>
+            </td>
+            <td>
+              <a href="/admin/monthReport"><button type="button" class="btn btn-outline-success">Month report</button></a>
+            </td>
+            <td>
+                <a href="/admin/yearReport"><button type="button" class="btn btn-outline-success">Year report</button></a>
+              </td>
+            </div>
+          <table class="table">
+            <thead>
+                <tr>
+                <th> Date</th>
+                <th> Total order</th>
+                <th> Total sold product </th>
+                <th> Amount</th>
+                <th> Profit </th>
+                </tr>
+           </div>
+           <tbody>
+            <% for(let sales of salesReport) {%>
+              <tr>
+              <td>
+            <span class="pl-2"><%-sales._id.month %>/<%-sales._id.day %>/<%-sales._id.year %> </span>
+              </td>
+             
+              <td><%-sales.count %> </td>
+              <td><%-sales.products %> </td>
+              <td><%-sales.totalPrice  %> </td>
+              <% let profit=Math.round((sales.totalPrice * 10)/100 )%>
+              <td><%-profit %> </td>
+            </tr>
+           <% } %>
+           </tbody>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const button = document.getElementById('download-button');
+   function generatePDF() {
+    // Choose the element that your content will be rendered to.
+    const element = document.getElementById('order');
+    // Choose the element and save the PDF for your user.
+    html2pdf().from(element).save();
+  }
+
+  button.addEventListener('click', generatePDF);
+</script>
+<%- include('partials/adminfooter.ejs') %>

@@ -1,0 +1,45 @@
+<%- include('partials/adminheader.ejs') %>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Add banner</h4>
+        <!-- <p class="card-description">Add product</p> -->
+        <form class="forms-sample" style="margin-top: 5rem;" action="/admin/bannerdetails" method="post" enctype="multipart/form-data">
+          <% if(BannerADDerr.length>0){ %>
+            <div
+              class="alert alert-danger col-md-12 text-center"
+              style="color: white; background-color: rgb(221, 118, 118)"
+              role="alert"
+            >
+              <p class="text-danger"><%=BannerADDerr %></p>
+            </div>
+            <% } %>
+          
+          <div class="form-group">
+            <label for="exampleInputName1">Main head</label>
+            <input type="text" class="form-control" id="exampleInputName1" placeholder="Head one" name="main_head">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName1">Sub head</label>
+            <input type="text" class="form-control" id="exampleInputName1" placeholder="Head two" name="sub_head">
+          </div>
+        <div class="form-group">
+            <label for="exampleInputName1">Url</label>
+            <input type="text" class="form-control" id="exampleInputName1" placeholder="Url" name="route">
+          </div>
+          
+          <div class="form-group">
+            <label for="exampleInputName1">offer</label>
+            <input type="number" class="form-control" id="exampleInputName1" placeholder="offer" name="offer">
+          </div>
+          
+          <div class="form-group" style="margin-top: 2rem;" >
+            <label for="formFileSm" class="form-label">image</label>
+            <input class="form-control form-control-sm" id="formFileSm"  type="file" name="ImageURL" style="height: 3rem;" multiple/>
+          </div>
+        <button type="submit" id="confirm-btn" class="btn btn-primary mr-2">Add banner</button>
+          </form>
+      </div>
+    </div>
+  </div>
+<%- include('partials/adminfooter.ejs') %>

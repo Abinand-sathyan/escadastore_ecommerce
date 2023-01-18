@@ -1,0 +1,49 @@
+<%- include('partials/adminheader.ejs') %>
+<div class="row">
+  <a href="#" style="width: 100%; "><button type="button" class="btn btn-primary" style="width: 100%;height: 3rem;">Year report</button></a>
+  </div>
+<div class="row ">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"></h4>
+        <div class="table-responsive">
+            <div style="display: inherit;">
+                <a href="/admin/productDelete"><button type="button" class="btn btn-outline-danger">PDf</button></a>
+            </td>
+            <td>
+              <a href="/admin/monthReport"><button type="button" class="btn btn-outline-success">Month report</button></a>
+            </td>
+            <td>
+                <a href="/admin/yearReport"><button type="button" class="btn btn-outline-success">Year report</button></a>
+              </td>
+            </div>
+          <table class="table">
+            <thead>
+                <tr>
+                <th> Date</th>
+                <th> Total order</th>
+                <th> Total sold product </th>
+                <th> Amount</th>
+                <th> Profit </th>
+                </tr>
+           </div>
+           <tbody>
+            <% for( let i = 0; i < salesReport.length; i++ ) { %>
+              <tr>
+            
+            <td><%= salesReport[i]._id.year %>  </td>
+              
+            <td><%= salesReport[i].count %></td>
+              <td><%= salesReport[i].products %> </td>
+              <td><%= salesReport[i].TotalPrice %></td>
+              <% let profit=Math.round((salesReport[i].TotalPrice * 10)/100) %> 
+              <td><%= profit %> </td>
+            </tr>
+           <% } %>
+           </tbody>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('partials/adminfooter.ejs') %>

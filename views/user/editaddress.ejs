@@ -1,0 +1,66 @@
+<%- include('partials/userheader.ejs') %>
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/user/images/bg-01.jpg');margin-top: 6rem;">
+    <h2 class="ltext-105 cl0 txt-center">
+       Edit Address
+    </h2>
+</section>
+<div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col">
+        <div class="card my-4 shadow-3">
+           <div class="row g-0">
+            <div class="col-xl-6" style=" width: 58%;">
+              <div class="card-body p-md-5 text-black">
+                <h3 class="mb-4 text-uppercase">Address Info</h3>
+               <form action="/PostEditaddress/<%= address._id %>" method="post">  
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="text" id="form3Example1m" class="form-control form-control-lg" name="Fname" value="<%= address.Fname %> "/>
+                      <label class="form-label" for="form3Example1m">First name</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="number" id="form3Example1n" class="form-control form-control-lg"  name="Pincode" value="<%= address.Pincode %>" />
+                      <label class="form-label" for="form3Example1n">Pin code</label>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="form-outline mb-4">
+                  <input type="text" id="form3Example8" class="form-control form-control-lg" name="Addressline" value="<%= address.Addressline %>" />
+                  <label class="form-label" for="form3Example8">Address</label>
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="text" id="form3Example8" class="form-control form-control-lg" name="city" value="<%= address.city %>"/>
+                    <label class="form-label" for="form3Example8">City</label>
+                  </div>
+                <div class="form-outline mb-4">
+                  <input type="text" id="form3Example3" class="form-control form-control-lg" name="State" value="<%= address.State %>"/>
+                  <label class="form-label" for="form3Example3">State</label>
+                </div>
+  
+                <div class="form-outline mb-4">
+                  <input type="text" id="form3Example2" class="form-control form-control-lg" name="Country" value="<%= address.Country %>"/>
+                  <label class="form-label" for="form3Example2">Country</label>
+                </div>
+  
+                <div class="d-flex justify-content-end pt-3">
+                  <button type="submit" class="btn btn-success btn-lg ms-2"
+                    style="background-color: #717fe0 ">Submit</button>
+                </div>
+                <% if(EdiaddressERR.length>0){ %> 
+                  <div class=" alert alert-danger col-md-12 text-center" role="alert">
+                    <p class="text-danger"><%=EdiaddressERR %> </p>
+                  </div>
+                    <% } %> 
+                </form>
+              </div>
+            </div>
+          </div>
+       </div>
+    </div>
+  </div>
+      
+<%- include('partials/userfooter.ejs') %>

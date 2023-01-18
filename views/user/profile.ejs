@@ -1,0 +1,146 @@
+<%- include('partials/userheader.ejs') %>
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/user/images/bg-01.jpg');margin-top: 6rem;">
+    <h2 class="ltext-105 cl0 txt-center">
+       Profile
+    </h2>
+</section>	
+<div class="container" style=" padding-top: 4rem;">
+    <div class="row gutters">
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+    <div class="card h-100">
+        <div class="card-body">
+            <div class="account-settings">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
+                    </div>
+                    <h5 class="user-name"><%=user.first_name %> </h5>
+                    <h6 class="user-email"><%=user.email_address %> </h6>
+                </div>
+                <div class="about">
+                    <h5>Wallet Amount</h5>
+                    <h4><p><%=user.useWallet %> </p></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+    <div class="card h-100">
+        <div class="card-body">
+            <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h6 class="mb-2" style="color:#717fe0" >Personal Details</h6>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="fullName">Name</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="Enter full name" value="<%=user.first_name %>">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="eMail">Email</label>
+                        <input type="email" class="form-control" id="eMail" placeholder="Enter email ID"  value="<%=user.email_address %>">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" id="phone" placeholder="Enter phone number" value="<%=user.mobile_number %>">
+                    </div>
+                </div>
+                <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="website">Website URL</label>
+                        <input type="url" class="form-control" id="website" placeholder="Website url">
+                    </div>
+                </div> -->
+            <!-- </div>
+            <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h6 class="mt-3 mb-2" style="color:#717fe0" >Address</h6>
+                </div> -->
+                <!-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="Street">Street</label>
+                        <input type="name" class="form-control" id="Street" placeholder="Enter Street">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="ciTy">City</label>
+                        <input type="name" class="form-control" id="ciTy" placeholder="Enter City">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="sTate">State</label>
+                        <input type="text" class="form-control" id="sTate" placeholder="Enter State">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="zIp">Zip Code</label>
+                        <input type="text" class="form-control" id="zIp" placeholder="Zip Code">
+                    </div>
+                </div> -->
+                </div>
+                <% if (address.length) { %>
+                 <p>
+                    <a class="btn " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="background-color: rgb(113, 127, 224);color:white">
+                      Address
+                    </a>
+                </p>
+                <div class="collapse" id="collapseExample" style="padding-top: 1rem;">
+                    <% for( let i = 0; i < address.length; i++ ) { %>
+                    <div class="card card-body">
+                        <li>Name:<%= address[i].Fname %> </li>
+                       <li>Address:<%= address[i].Addressline %> </li>
+                       <li><%= address[i].city %> </li>
+                       <li><%= address[i].State %> </li>
+                       <li><%= address[i].Country %> </li>
+                       <li><%= address[i].Pincode %> </li>
+                       <div style="display: flex;  padding-top: 2rem;">
+                        <a onclick="deleteaddress('<%= address[i]._id %>')"><button type="button" id="submit" name="submit" class="btn btn-danger">Delete address</button>
+                        <a href="editaddress/<%= address[i]._id %>"><button type="button" id="submit" name="submit" class="btn btn-primary" style="background-color: #717fe0; margin-left: 2rem;">Edit address</button></a>
+                      </div>
+                    </div>
+
+                    <% } %>
+                  </div>
+                  
+            
+            <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="text-right">
+                        <!-- <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button> -->
+                       <a href="address"><button type="button" id="submit" name="submit" class="btn btn-primary" style="background-color: #717fe0;">Add new address</button></a>
+                    </div>
+                </div>
+            </div>
+            <% } else { %>
+                <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="text-right">
+                            <!-- <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button> -->
+                           <a href="address"><button type="button" id="submit" name="submit" class="btn btn-primary" style="background-color: #717fe0;">Add address</button></a>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+<%- include('partials/userfooter.ejs') %>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+function deleteaddress(id)
+{
+    console.log(id);
+   axios.delete(`/deleteaddress?addressId=${id}`)
+   .then(()=>{location.reload()})
+}
+</script>

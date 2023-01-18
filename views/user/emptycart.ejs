@@ -1,0 +1,23 @@
+<%- include('partials/userheader.ejs') %>
+<div  class="mb-5 d-flex justify-content-center align-items-center flex-column" >
+ 
+  
+  <div id="icon-container" style="width: 30vw;"></div>
+    <h5 class=" pb-3 text-center">Your cart is empty <br>Please add few products</h5>
+    <a class="mb-5 btn btn-primary" href="/">Back To Home</a>
+  </div>
+<%- include('partials/userfooter.ejs') %>
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
+
+    <script>
+      var animation = bodymovin.loadAnimation({
+      // animationData: { /* ... */ },
+      container: document.getElementById('icon-container'), // required
+      path: '/animation/45650-shopping-cart.json', // required
+      renderer: 'svg', // required
+      loop: true, // optional
+      autoplay: true, // optional
+      name: "Demo Animation", // optional
+    });
+    </script>

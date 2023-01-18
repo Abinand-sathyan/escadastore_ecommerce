@@ -1,0 +1,82 @@
+<%- include('partials/adminheader.ejs') %>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Add Coupon</h4>
+        <% if (Exstcpn.length>0) { %>
+          <h2><p class="card-description"><code><%= Exstcpn %> !! </code> </p></h2>
+          <% } else if (FullFill.length>0) { %>
+            <h2><p class="card-description"><code><%= FullFill %> !!</code> </p></h2>
+        <% } %>
+        
+      <form class="forms-sample" action="/admin/coupon" method="post">
+          <div class="form-group">
+            <label for="exampleInputName1">coupon code</label>
+            <input type="text" class="form-control" id="exampleInputName1" placeholder="code" name="code" >
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Coupon type</label>
+              <div class="col-sm-4">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" 
+                    onclick="changeType('Percentage')"
+                    class="form-check-input" 
+                    name="couponType" 
+                    id="membershipRadios1" 
+                    value="Percentage" checked> Percentage </label>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" 
+                    onclick="changeType('Amount')"
+                    class="form-check-input" 
+                    name="couponType" 
+                    id="membershipRadios2" 
+                    value="Amount"> Amount </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName1" id="typePercentage">CUT-OFF Percentage</label>
+            <label for="exampleInputName1" id="typeAmount">CUT-OFF Amount</label>
+            <input type="text" class="form-control" id="exampleInputName1" placeholder="cut off" name="cutOff" >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName1">Max. Redeem Amount</label>
+            <input type="number" class="form-control" id="exampleInputName1" placeholder="maxRedeemAmount" name="maxRedeemAmount" >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName1">Min. Redeem Amount</label>
+            <input type="number" class="form-control" id="exampleInputName1" placeholder="minCartAmount" name="minCartAmount" >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName1">No. of coupons to generate</label>
+            <input type="number" class="form-control" id="exampleInputName1" placeholder="generateCount" name="generateCount" >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName1">Valid upto</label>
+            <input type="Date" class="form-control" id="exampleInputName1" placeholder="expireDate" name="expireDate" >
+          </div>
+       <button type="submit" class="btn btn-primary mr-2" style="margin-left:0vh;margin-top:2rem;">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+<script>
+    function changeType(type) {
+      if (type == "Amount") {
+        document.getElementById("typeAmount").hidden = false;
+        document.getElementById("typePercentage").hidden = true;
+      } else if (type == "Percentage") {
+        document.getElementById("typeAmount").hidden = true;
+        document.getElementById("typePercentage").hidden = false;
+      }
+    }
+  </script>
+<%- include('partials/adminfooter.ejs') %>
