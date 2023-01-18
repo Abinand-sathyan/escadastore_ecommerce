@@ -1,4 +1,4 @@
-const UserDB = require("../models/userModel");
+const UserDB = require("../models/usermodel");
 const categoryDB = require("../models/categorymodel");
 const productDB = require("../models/addproductmodel");
 const cartDB = require("../models/cartmodel");

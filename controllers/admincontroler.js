@@ -1,4 +1,4 @@
-const UserDB = require("../models/userModel");
+const UserDB = require("../models/usermodel");
 const categoryDB = require("../models/categorymodel");
 const productDB = require("../models/addproductmodel");
 const orderDB = require("../models/ordermodel");
@@ -6,7 +6,7 @@ const bannerDB=require("../models/bannermodel");
 const coponDB=require("../models/coupon");
 const mongoose = require("mongoose");
 const moment = require("moment");
-const { findOne, findById, validate } = require("../models/userModel");
+const { findOne, findById, validate } = require("../models/usermodel");
 
 const getAdmin = (req, res) => {
   res.render("admin/adminlogin");
