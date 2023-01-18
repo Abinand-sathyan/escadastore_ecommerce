@@ -1,5 +1,5 @@
 const { render } = require("ejs")
-const User=require("../models/userModel")
+const User=require("../models/usermodel")
 const usersession =async(req,res,next)=>{
 if(req.session.LoggedIn)
 {
