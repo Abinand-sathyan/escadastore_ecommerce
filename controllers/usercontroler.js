@@ -895,7 +895,7 @@ const verifycoupon= async(req,res)=>{
     console.log(expireDate,couponType,cutOff,maxRedeemAmount);
     
   if(generateCount>=1){
-    if(expireDate>nowDate){
+    if(expireDate<nowDate){
     if(couponType=="Amount"){
     if(total<minCartAmount)
        {
