@@ -231,10 +231,11 @@ const getproductdetails = async (req, res) => {
   console.log(reviewdata);
   res.render("user/productdetails", {
     productsdatails,
-    user: req.session.user,
+    user:req.session.user,
     reviewdata
   });
 }catch(error){
+console.log(error);
 res.redirect("/errorpage");
 };
 }
