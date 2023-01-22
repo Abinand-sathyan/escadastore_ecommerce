@@ -1,14 +1,26 @@
-$(function() {
+// $(function() {
   /* ChartJS
    * -------
    * Data and config for chartjs
    */
-  'use strict';
+
+
+
+  
+  async function main(val){
+    await axios.get(`/admin/chardetails?value=${val}`).then((response)=>{
+      console.log(response);
+      if(response.data.status){
+      
+        const groupedOrderData = response.data.sales;
+        console.log(groupedOrderData,"+++++****");
+    'use strict';
+    if(val==7){
   var data = {
-    labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
+    labels:['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
     datasets: [{
       label: '# of Votes',
-      data: [10, 19, 3, 5, 2, 3],
+      data:  groupedOrderData,
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -28,7 +40,61 @@ $(function() {
       borderWidth: 1,
       fill: false
     }]
-  };
+  }}else if(val==30){
+    var data = {
+      labels:['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+      datasets: [{
+        label: '# of Votes',
+        data:  groupedOrderData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1,
+        fill: false
+      }]
+    }
+
+  }else if(val==365){
+    var data = {
+      labels:['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [{
+        label: '# of Votes',
+        data:  groupedOrderData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1,
+        fill: false
+      }]
+    }
+
+  }
   var multiLineData = {
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [{
@@ -378,4 +444,18 @@ $(function() {
       options: doughnutPieOptions
     });
   }
+}})
+
+}
+
+  $(function() {
+    console.log("sales report chekk++++++++");
+    main(7)
 });
+
+async function chartchange(){
+  let val = document.getElementById('saleschange').value
+  console.log(val);
+  document.getElementById('mainchart').innerHTML = ' <canvas id="barChart"></canvas>'
+  main(val)
+}

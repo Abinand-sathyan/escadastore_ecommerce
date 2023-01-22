@@ -26,7 +26,20 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Bar chart</h4>
+                  <div id="mainchart">
                   <canvas id="barChart" style="height:230px"></canvas>
+                </div>
+                  <select 
+                      class="form-control" 
+                      name="orderStatus"
+                      id="saleschange"
+                      onchange="chartchange()"
+                      >
+                  <option value="7">This week</option>
+                  <option value="30">This month</option>
+                  <option value="365">This year</option>
+                  
+              </select>
                 </div>
               </div>
             </div>

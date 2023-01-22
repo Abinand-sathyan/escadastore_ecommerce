@@ -274,23 +274,24 @@ const postproductdata = async (req, res) => {
       console.log(catOfferPrice,"ojpohfruwHOGUIUIPGHFIOH"); 
     const proOfferPrice = Math.round(Prize - (Prize * offer) / 100);
       let discountPrice;
-      let prise;
-      console.log(proOfferPrice,"ojpohfruwHOGUIUIPGHFIOH+++++"); 
+      let discount;
+     console.log(proOfferPrice,"ojpohfruwHOGUIUIPGHFIOH+++++"); 
       if (catOfferPrice < proOfferPrice) {
         discountPrice = proOfferPrice;
-      } else if (catOfferPrice > proOfferPrice) {
+       } else if (catOfferPrice > proOfferPrice) {
         discountPrice = catOfferPrice;
-      }
+       }
       console.log(discountPrice,"kmgwmkrmtttttttttttttttttttttttttttttt");
+
      
-      prise=Prize-discountPrice
+      discount=Prize-discountPrice;
       
       console.log(Prize,"ojpohfruwHOGUIUIPGHFIOH"); 
       
       await Object.assign(req.body, {
         ImageURL: img,
-        Prize:prise,
-        discountPrice:discountPrice,
+        Prize:discountPrice,
+        discountPrice:discount,
         createdAt: moment().format("MM/DD/YYYY"),
       });
       console.log(req.body);
@@ -344,10 +345,10 @@ const posteditproduct = async (req, res) => {
     console.log(req.body, req.files, req.params);
     const body = req.body;
     const category=req.body.Category;
-    const Prize=req.body.Prize;
-    const offer=req.body.offer
+    const Prize=parseInt(req.body.Prize);
+    const offer=parseInt(req.body.offer);
     const productId = req.params.id;
-    console.log(productId);
+    console.log(productId,offer,Prize);
     if (req.files.length === 0) {
       console.log(productId,"theretfytftyou");
     //  let abcd =  await productDB.findByIdAndUpdate(productId, 
@@ -361,23 +362,22 @@ const posteditproduct = async (req, res) => {
     const catOfferPrice = Math.round(
       Prize - (Prize * catOfferPercentage) / 100
     );
-    console.log(catOfferPrice,"ojpohfruwHOGUIUIPGHFIOH"); 
+    console.log(catOfferPrice,"ojpohfruwHOGUIUIPGHFIOH");
+    console.log(Prize); 
   const proOfferPrice = Math.round(Prize - (Prize * offer) / 100);
     let discountPrice;
-    let prise;
+    let discount;
     console.log(proOfferPrice,"ojpohfruwHOGUIUIPGHFIOH+++++"); 
     if (catOfferPrice < proOfferPrice) {
       discountPrice = proOfferPrice;
-    } else if (catOfferPrice > proOfferPrice) {
+     } else if (catOfferPrice > proOfferPrice) {
       discountPrice = catOfferPrice;
-    }
+     }
     console.log(discountPrice,"kmgwmkrmtttttttttttttttttttttttttttttt");
    
-    prise=Prize-discountPrice
-    
-    console.log(Prize,"ojpohfruwHOGUIUIPGHFIOH"); 
-    Object.assign(body, {Prize:prise,
-      discountPrice:discountPrice});
+    discount=Prize-discountPrice;
+    Object.assign(body, {Prize:discountPrice,
+      discountPrice:discount});
     await productDB.findByIdAndUpdate(productId, { $set: body });
 
         console.log("<><><>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<")
@@ -401,7 +401,7 @@ const posteditproduct = async (req, res) => {
       console.log(catOfferPrice,"ojpohfruwHOGUIUIPGHFIOH"); 
     const proOfferPrice = Math.round(Prize - (Prize * offer) / 100);
       let discountPrice;
-      let prise;
+      let discount;
       console.log(proOfferPrice,"ojpohfruwHOGUIUIPGHFIOH+++++"); 
       if (catOfferPrice < proOfferPrice) {
         discountPrice = proOfferPrice;
@@ -410,15 +410,16 @@ const posteditproduct = async (req, res) => {
       }
       console.log(discountPrice,"kmgwmkrtttttttttt");
      
-      prise=Prize-discountPrice
+      discount=Prize-discountPrice
       
       console.log(Prize,"ojpohfruwHOGUIUIPGHFIOH"); 
-      Object.assign(body, { ImageURL: img , Prize:prise,
-        discountPrice:discountPrice});
+      Object.assign(body, { ImageURL: img , Prize:discountPrice,
+        discountPrice:discount});
       await productDB.findByIdAndUpdate(productId, { $set: body });
       res.redirect("/admin/getproductlist");
     }
   } catch(error){
+    console.log(error);
     res.redirect("/admin/errorpage")
   }
 };
@@ -760,6 +761,157 @@ const salesreport=async (req,res)=>{
 
 
 
+  const barchardetails=async(req,res)=>{
+    try{
+    console.log(req.query.value);
+    const value=req.query.value;
+    var date = new Date();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    let sales=[]
+    if(value==7){
+      let today = new Date();
+      let lastDay = new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000);
+      console.log(today,lastDay);
+      for(i=0;i<7;i++){
+        let abc={}
+        const weeksalesdata=await orderDB.aggregate([
+          {
+            $match:{createdAt:{$lt:today,$gte:lastDay},
+            orderStatus:{$eq:"Delivered"},},
+          },
+          {
+            $group:{
+              _id: moment(today).format("DD-MM-YYYY"),
+              totalPrice:{$sum:"$total"},
+              count: { $sum: 1 },
+            },
+          },
+
+        ])
+        console.log(weeksalesdata,"+++++++++------------");
+        if(weeksalesdata.length){
+          sales.push(weeksalesdata[0])
+        }else{
+          abc._id = today.getDay() + 1;
+          abc.totalPrice = 0;
+          abc.count = 0;
+          sales.push(abc);
+        }
+
+        today = lastDay;
+        lastDay = new Date(
+          new Date().getTime() - (i + 1) * 24 * 60 * 60 * 1000
+        );
+      }
+      let salesdata=[]
+      for(i=0;i<sales.length;i++)
+         {
+         salesdata.push(sales[i].totalPrice)
+        }
+        res.json({ status: true,sales: salesdata})
+    }else if(value==30){
+      console.log(value,"monyh check");
+      let firstDay = new Date(year, month, 1);
+      firstDay = new Date(firstDay.getTime() + 1 * 24 * 60 * 60 * 1000);
+      let nextWeek = new Date(firstDay.getTime() + 7 * 24 * 60 * 60 * 1000);
+     
+      for (let i = 1; i <= 5; i++) {
+        let abc = {};
+        let salesByMonth = await orderDB.aggregate([
+          {
+            $match: {
+              createdAt: { $gte: firstDay, $lt: nextWeek },
+              orderStatus: { $eq: "Delivered" },
+            },
+          },
+          {
+            $group: {
+              _id: moment(firstDay).format("DD-MM-YYYY"),
+              totalPrice: { $sum: "$total"},
+              count: { $sum: 1 },
+            },
+          },
+        ]);
+        console.log(salesByMonth,"thr+__+++++++++");
+        if (salesByMonth.length) {
+          sales.push(salesByMonth[0]);
+        } else {
+          (abc._id = moment(firstDay).format("DD-MM-YYYY")),
+            (abc.totalPrice = 0);
+          abc.count = 0;
+          sales.push(abc);
+        }
+  
+        firstDay = nextWeek;
+        if (i == 4) {
+          nextWeek = new Date(
+            firstDay.getFullYear(),
+            firstDay.getMonth() + 1,
+            1
+          );
+        } else {
+          nextWeek = new Date(
+            firstDay.getFullYear(),
+            firstDay.getMonth() + 0,
+            (i + 1) * 7
+          );
+        }
+      }
+   
+        let salesData=[]
+      for (let i = 0; i < sales.length; i++) {
+        salesData.push(sales[i].totalPrice);  
+      }
+      res.json({ status: true, sales:salesData})
+
+    }else if(value==365){
+      year = date.getFullYear();
+      var currentYear = new Date(year, 0, 1);
+      let salesByYear = await orderDB.aggregate([
+        {
+          $match: {
+            createdAt: { $gte: currentYear },
+            orderStatus: { $eq: "Delivered" },
+          },
+        },
+        {
+          $group: {
+            _id: { $dateToString: { format: "%m", date: "$createdAt" } },
+            totalPrice: { $sum: "$total" },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { _id: 1 } },
+      ]);
+      for (let i = 1; i <= 12; i++) {
+        let result = true;
+        for (let k = 0; k < salesByYear.length; k++) {
+          result = false;
+          if (salesByYear[k]._id == i) {
+            sales.push(salesByYear[k]);
+            break;
+          } else {
+            result = true;
+          }
+        }
+        if (result) sales.push({ _id: i, totalPrice: 0, count: 0 });
+      }
+      // var lastYear = new Date(year - 1, 0, 1);
+       let salesData=[]
+      for (let i = 0; i < sales.length; i++) {
+        salesData.push(sales[i].totalPrice);
+      }
+      res.json({ status: true, sales:salesData})
+    }
+  }catch(error){
+    console.log(error);
+    res.redirect("/admin/errorpage")
+  }
+}
+
+
+
 
 
 
@@ -798,5 +950,6 @@ module.exports = {
   monthreport,
   yearReport,
   dashboard,
-  geterrorpage
+  geterrorpage,
+  barchardetails
 };
