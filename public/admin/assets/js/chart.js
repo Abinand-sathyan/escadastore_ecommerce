@@ -453,9 +453,9 @@
     main(7)
 });
 
-// async function chartchange(){
-//   let val = document.getElementById('saleschange').value
-//   console.log(val);
-//   document.getElementById('mainchart').innerHTML = ' <canvas id="barChart"></canvas>'
-//   main(val)
-// }
+async function chartchange(){
+  let val = document.getElementById('saleschange').value
+  console.log(val);
+  document.getElementById('mainchart').innerHTML = ' <canvas id="barChart"></canvas>'
+  main(val)
+}
