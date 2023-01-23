@@ -879,7 +879,7 @@ const verifycoupon= async(req,res)=>{
   let grandtotal;
   let coupnMsg;
   let nowDate=moment().format("DD/MM/YYYY")
-  let nowdate=nowDate.toLocaleDateString();
+  
     
   console.log(nowDate);
   const coupon= await coponDB.find({code:codename,status:"ACTIVE"})
@@ -899,7 +899,7 @@ const verifycoupon= async(req,res)=>{
    
     
   if(generateCount>=1){
-    if(expireDate>nowdate){
+    if(expireDate>nowDate){
     if(couponType=="Amount"){
     if(total<minCartAmount)
        {

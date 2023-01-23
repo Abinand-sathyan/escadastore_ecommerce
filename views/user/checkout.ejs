@@ -224,9 +224,9 @@ async function verifycoupons(subtotal)
                     total,couponcode
 
 	 	              	}
-         }).then((response)=>{
+         })
+         if(response.data.status==true){
           console.log(response);
-          if(response.data.status==true){
            console.log(response.data.grandtotal);
            document.getElementById("CouponError").style.color="green";
            document.getElementById("CouponError").innerHTML="Coupon applied successfully";
@@ -239,7 +239,7 @@ async function verifycoupons(subtotal)
           document.getElementById("CouponError").innerHTML=response.data.coupnMsg;
          
           }
-         })
+         
     }
   }
 
