@@ -9,9 +9,9 @@
   
   async function main(val){
     const response=await axios.get(`/admin/chardetails?value=${val}`)
-    const pieresponse=await axios.get(`/admin/piechardetails`)
-      
+    // const pieresponse=await axios.get(`/admin/piechardetails`)
       if(response.data.status){
+        const pieresponse=await axios.get(`/admin/piechardetails`)
         console.log(response);
         const groupedOrderData = response.data.sales;
         console.log(groupedOrderData,"+++++****");
