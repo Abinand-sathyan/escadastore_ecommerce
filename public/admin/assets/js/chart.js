@@ -8,10 +8,11 @@
 
   
   async function main(val){
-    await axios.get(`/admin/chardetails?value=${val}`).then((response)=>{
-      console.log(response);
-      if(response.data.status){
+    const response=await axios.get(`/admin/chardetails?value=${val}`)
+    const pieresponse=await axios.get(`/admin/piechardetails`)
       
+      if(response.data.status){
+        console.log(response);
         const groupedOrderData = response.data.sales;
         console.log(groupedOrderData,"+++++****");
     'use strict';
@@ -152,10 +153,12 @@
     }
   };
 
-  
+  if(pieresponse.data.data){
+    console.log(pieresponse.data.data,"++++=====");
+    const piecahrtdetails=pieresponse.data.data;
   var doughnutPieData = {
     datasets: [{
-      data: [30, 40, 30],
+      data: piecahrtdetails,
       backgroundColor: [
         'rgba(255, 99, 132, 0.5)',
         'rgba(54, 162, 235, 0.5)',
@@ -176,11 +179,11 @@
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
     labels: [
-      'Pink',
-      'Blue',
-      'Yellow',
+      'Cancelled',
+      'Delivered',
+      'Returned',
     ]
-  };
+  }};
   var doughnutPieOptions = {
     responsive: true,
     animation: {
@@ -444,7 +447,7 @@
       options: doughnutPieOptions
     });
   }
-}})
+}
 
 }
 

@@ -911,6 +911,25 @@ const salesreport=async (req,res)=>{
 }
 
 
+const piechardetails=async(req,res)=>{
+  try{
+    const cancel = await orderDB.find({ orderStatus: "Cancelled" }).count();
+    const Delivered = await orderDB.find({ orderStatus: "Delivered"}).count();
+    const returned = await orderDB.find({ orderStatus: "Returned"}).count();
+    let data = [];
+    data.push(cancel);
+    data.push(Delivered);
+    data.push(returned);
+  
+    res.json({ data });
+
+  }catch(error){
+    console.log(error);
+    res.redirect("/admin/errorpage")
+  }
+}
+
+
 
 
 
@@ -951,5 +970,6 @@ module.exports = {
   yearReport,
   dashboard,
   geterrorpage,
-  barchardetails
+  barchardetails,
+  piechardetails
 };

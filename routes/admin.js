@@ -38,7 +38,8 @@ const {getAdmin,
     yearReport,
     dashboard,
     geterrorpage,
-    barchardetails
+    barchardetails,
+    piechardetails
 } = require("../controllers/admincontroler");
 
 
@@ -71,6 +72,7 @@ const {getAdmin,
     router.get("/dashboard",session,dashboard);
     router.get("/errorpage",session,geterrorpage);
     router.get("/chardetails",session,barchardetails);
+    router.get("/piechardetails",session,piechardetails);
     
 
     //post methods
