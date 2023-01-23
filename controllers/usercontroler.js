@@ -878,7 +878,7 @@ const verifycoupon= async(req,res)=>{
  
   let grandtotal;
   let coupnMsg;
-  let nowDate=moment().format("DD/MM/YYYY")
+  let nowDate=moment().toDate()
   
     
   console.log(nowDate);
@@ -887,9 +887,9 @@ const verifycoupon= async(req,res)=>{
   if(coupon.length<0)
   {
     coupnMsg = "Coupon Invalid";
-    res.json({ status: false, couponMsg });
+    res.json({ status: false,coupnMsg});
   }else{
-    let expireDate= coupon[0].expireDate.toLocaleDateString()
+    let expireDate= coupon[0].expireDate
     let couponType = coupon[0].couponType;
     let cutOff = coupon[0].cutOff;
     let maxRedeemAmount = coupon[0].maxRedeemAmount;
@@ -897,15 +897,15 @@ const verifycoupon= async(req,res)=>{
     let generateCount = coupon[0].generateCount;
     console.log(expireDate,couponType,cutOff,maxRedeemAmount);
    
-    
+    console.log(expireDate.getTime(),"************8&&&&&&&&&&&&&&&&");
   if(generateCount>=1){
-    if(expireDate>nowDate){
+    if(expireDate.getTime()>nowDate.getTime()){
     if(couponType=="Amount"){
     if(total<minCartAmount)
        {
         console.log("...........>>>>>>>>>>>>>..");
         coupnMsg="Minimum Rs."+minCartAmount+"need to Apply this Coupon";
-        res.json(couponMsg);
+        res.json(coupnMsg);
        }else{
         grandtotal=Math.round(total-cutOff)
         console.log(grandtotal,"&&&&&&&&&&&&&&&&&&&&777");
@@ -920,7 +920,7 @@ const verifycoupon= async(req,res)=>{
         if(total<minCartAmount)
         {
          coupnMsg="Minimum Rs."+minCartAmount+"need to Apply this Coupon";
-         res.json({ status: false, couponMsg });
+         res.json({ status: false,coupnMsg });
         }else{
         const reduceamount=((total*cutOff)/100);
         if(reduceamount>maxRedeemAmount)
@@ -950,12 +950,13 @@ const verifycoupon= async(req,res)=>{
     }
   }else{
     coupnMsg="coupon limit exceeded";
-    res.json({ status: false, couponMsg });
+    res.json({ status: false,coupnMsg });
   }
 }
 
   console.log(codename,total);
 }catch(error){
+  console.log(error);
   res.redirect("/errorpage")
 }
 }
