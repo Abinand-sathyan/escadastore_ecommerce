@@ -878,13 +878,13 @@ const verifycoupon= async(req,res)=>{
  
   let grandtotal;
   let coupnMsg;
-  let nowDate=moment().toDate()
+  let nowDate=moment().toDate();
   
     
   console.log(nowDate);
   const coupon= await coponDB.find({code:codename,status:"ACTIVE"})
   console.log(coupon);
-  if(coupon.length<0)
+  if(coupon.length<1)
   {
     coupnMsg = "Coupon Invalid";
     res.json({ status: false,coupnMsg});
@@ -897,9 +897,11 @@ const verifycoupon= async(req,res)=>{
     let generateCount = coupon[0].generateCount;
     console.log(expireDate,couponType,cutOff,maxRedeemAmount);
    
-    console.log(expireDate.getTime(),"************8&&&&&&&&&&&&&&&&");
+    // let expiredate=moment().toDate();  
+    // let expiredate=moment().toDate(); 
   if(generateCount>=1){
     if(expireDate.getTime()>nowDate.getTime()){
+      console.log("workig");
     if(couponType=="Amount"){
     if(total<minCartAmount)
        {
