@@ -901,7 +901,11 @@ const verifycoupon= async(req,res)=>{
     // let expiredate=moment().toDate(); 
   if(generateCount>=1){
     if(expireDate.getTime()>nowDate.getTime()){
+      
       console.log("workig");
+      console.log(expireDate);
+      console.log(nowDate);
+      console.log(expireDate-nowDate);
     if(couponType=="Amount"){
     if(total<minCartAmount)
        {
@@ -948,6 +952,9 @@ const verifycoupon= async(req,res)=>{
     }else{
       console.log("+++++++++++++++++++++++++++");
       coupnMsg="coupon date expired";
+      console.log(expireDate);
+      console.log(nowDate);
+      console.log(expireDate-nowDate);
      res.json({status:false,coupnMsg});
     }
   }else{
