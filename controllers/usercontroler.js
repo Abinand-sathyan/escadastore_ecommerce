@@ -243,6 +243,10 @@ res.redirect("/errorpage");
 
 const getproducts = async (req, res) => {
   try{
+    const typedata = {
+      typelisting: "listing",
+      key: null,
+    };
     let pagenation=res.pagenation;
     let allproduct=res.pagenation.results
     console.log(pagenation);
@@ -257,6 +261,17 @@ const getproducts = async (req, res) => {
   else if
   (req.query.sort == "man" ){
     productlist = await productDB.find({Category:{$eq:"man"}})
+  }else if(req.query.q){
+    (typedata.typelisting = "qlisting"), (typedata.key = req.query.q);
+    console.log("after changing the value", typedata);
+
+    const proid = req.query.q;
+    productlist = await productDB.find({ _id: proid });
+    console.log(productlist,'this is new all product');
+
+    console.log(
+      "this is the new productdts check this one    skkkkkkkkkkkkk"
+    );
   }
   else{
     productlist = await productDB.find()
@@ -1159,6 +1174,39 @@ const geterrorpage=(req,res)=>{
 
 
 
+const  searchresult = async(req,res) =>{
+  try {
+    console.log("+++++++++********8888888888");
+    const result = [];
+    console.log(req.body.payload, "this is the payload value");
+    const skey = req.body.payload;
+    const regex = new RegExp("^" + skey + ".*", "i");
+    const pros = await productDB.aggregate([
+      {
+        $match: {
+          $or: [{ ProductName: regex }, { Discription: regex }],
+        },
+      },
+    ]);
+
+    console.log(pros, "this is the pros check those");
+    pros.forEach((val, i) => {
+      result.push({ title: val.ProductName, type: "product", id: val._id });
+    });
+    console.log(result);
+ 
+    const nresult = result.slice(0, 5);
+    console.log(nresult, "this is the new result");
+
+    res.send({ payload: nresult });
+  }catch(error){
+    console.log(error);
+    res.redirect("/errorpage")
+  }
+};
+
+
+
 
 
 
@@ -1194,5 +1242,6 @@ module.exports = {
   createorder,
   veryfypayment,
   productreview,
-  geterrorpage
+  geterrorpage,
+  searchresult
 };

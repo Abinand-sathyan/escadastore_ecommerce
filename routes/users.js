@@ -34,7 +34,8 @@ var{postUserhome,
     createorder,
     veryfypayment,
     productreview,
-    geterrorpage}=require("../controllers/usercontroler")
+    geterrorpage,
+    searchresult}=require("../controllers/usercontroler")
 
 
     //get methods
@@ -55,6 +56,7 @@ var{postUserhome,
     router.get("/orderlist",usersession,checkBlock,getorderlist);
     router.get("/orderdetails/:id",usersession,checkBlock,orderdetials)
     router.get("/errorpage",usersession,checkBlock,geterrorpage);
+    
    
     
    
@@ -75,6 +77,8 @@ var{postUserhome,
     router.post("/create-order",usersession,checkBlock,createorder)
     router.post("/veryfypayment",usersession,checkBlock,veryfypayment)
     router.post("/review",usersession,checkBlock,productreview)
+    router.post('/getresult',searchresult)
+
 
     
     
