@@ -62,7 +62,7 @@ const AdminLogin = (req, res) => {
 
   if (AdmineMail == email && Adminpassword == password) {
     req.session.adminlogin = true;
-    res.render("admin/dashboard");
+    res.redirect("/admin/dashboard");
   } else {
     res.redirect("/admin");
   }
@@ -751,8 +751,50 @@ const salesreport=async (req,res)=>{
     }
   }
 
-  const dashboard=(req,res)=>{
-    res.render("admin/dashboard")
+  const dashboard=async(req,res)=>{
+    try{
+      let order = await orderDB.find();
+      let orderCount = orderDB.length;
+      let user = await UserDB.find();
+      let usersCount = user.length;
+      const total = await orderDB.aggregate([
+        {
+          $group: {
+            _id: order._id,
+            total: {
+              $sum: "$total",
+            },
+          },
+        },
+      ]);
+      const totalProfit = total[0].total;
+    
+         let pending=await orderDB.aggregate([
+        {
+          $match: {
+            paymentStatus: "peyment pending",
+          },
+        },
+        {
+          $count: "Count",
+        },
+      ])
+      console.log(order,orderCount,totalProfit,usersCount);
+      let pendingCount
+      if (pending.length != 0) {
+       pendingCount = pending[0].Count;
+      }
+      res.render("admin/dashboard",{
+        order,
+        orderCount,
+        usersCount,
+        totalProfit,
+        pendingCount,
+       });
+    }catch(error)
+    {
+      res.redirect("/admin/errorpage")
+    }
   }
 
   const geterrorpage=(req,res)=>{
