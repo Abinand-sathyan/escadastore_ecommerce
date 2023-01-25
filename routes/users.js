@@ -9,6 +9,7 @@ var{postUserhome,
     getUserregister,
     postotp,
     otp,
+    resetotp,
     getproductdetails,
     userlogin,
     getviewcart,
@@ -43,6 +44,7 @@ var{postUserhome,
     router.get("/",getUserhome);
     router.get("/userlogin",userlogin);
     router.get("/usersignup",getUserSignUp);
+    router.get("/resetotp",resetotp);
     router.get("/logout",userlogout);
     router.get("/getproductdetails/:id",usersession,checkBlock,getproductdetails);
     router.get("/getviewcart",usersession,getviewcart);

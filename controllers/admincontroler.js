@@ -336,6 +336,7 @@ const getproductedit = async (req, res) => {
   console.log(editproductdata);
   res.render("admin/editproduct", { editproductdata, editcategory });
   }catch(error){
+    
     res.redirect("/admin/errorpage")
   }
 };

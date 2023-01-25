@@ -98,7 +98,25 @@ const otp = (req, res) => {
 
 
 
+
+const resetotp=(req,res)=>{
+  try{
+    console.log("dkfhfkdfhf");
+    const {mobile_number}=req.session.user1
+    console.log(mobile_number,"jierjgijgrjigr++++++++++++");
+    const number=mobile_number
+    sendotp(number);
+    res.redirect('/otp');
+  }catch{
+    res.redirect("/errorpage");  
+
+  }
+}
+
+
+
 const getUserregister = async (req, res) => {
+  try{
   console.log(req.body);
   const pass1 = req.body.password;
   const pass2 = req.body.confirm_password;
@@ -142,7 +160,9 @@ const getUserregister = async (req, res) => {
       }
     });
   }
-};
+}catch(error){
+  res.redirect("/errorpage")
+}};
 
 const postotp = async (req, res) => {
     console.log("haiinelooo")
@@ -1243,5 +1263,6 @@ module.exports = {
   veryfypayment,
   productreview,
   geterrorpage,
-  searchresult
+  searchresult,
+  resetotp
 };
