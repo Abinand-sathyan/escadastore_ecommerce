@@ -832,7 +832,6 @@ const salesreport=async (req,res)=>{
           },
 
         ])
-        console.log(weeksalesdata,"+++++++++------------");
         if(weeksalesdata.length){
           sales.push(weeksalesdata[0])
         }else{
