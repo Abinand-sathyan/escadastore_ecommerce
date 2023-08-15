@@ -210,6 +210,7 @@ const postUserhome = async (req, res) => {
     const { email, password } = req.body;
     console.log(email);
     const userdetails = await UserDB.findOne({ email_address: email });
+    console.log(userdetails,"the hell ");
     if (userdetails) {
       console.log("successfull user");
       console.log(userdetails.password);
@@ -317,6 +318,7 @@ const getviewcart = async (req, res) => {
     const cartitems = await cartDB
       .findOne({ owner: mongoose.Types.ObjectId(userId) })
       .populate("items.productDedtails");
+      console.log(cartitems,"check cart");
     if(cartitems.items.length!=0){
     res.render("user/viewcart", { cartitems, user: req.session.user,prolimit:req.flash("prolimit")});
     }else{
@@ -726,15 +728,15 @@ const payment =async(req,res)=>{
   const address=selectedaddress.Address[parseInt(addressindex)];
   const cartdetails=await cartDB.findOne({owner:userid}).populate("items.productDedtails")
   const cartitem=cartdetails.items;
-  console.log(cartitem,address,selectedaddress);
+  console.log(cartitem,address,selectedaddress,"check address");
   // const carttotal=cartdetails.totalCart;
   // const coupon=await coponDB.find({code:couponamount})
    if(addressindex&&paymethod)
  {
    if(paymethod==='cash on delivery')
    {
-    console.log("the ehbvdiubvskall hoiiii");
-     const order= await orderdB({
+      console.log("the ehbvdiubvskall hoiiii");
+      const order= await orderdB({
       date: moment().format("DD/MM/YYYY"),
       time: moment().toDate().getTime(),
       UserId:userid,
@@ -793,6 +795,8 @@ const payment =async(req,res)=>{
               // razorpayOrderData: order,
               userOrderData: userOrderData,
             };
+        console.log(response,"payment response");
+
             res.json(response);
      })
    }else if(paymethod==="Wallet"){
@@ -826,6 +830,7 @@ const payment =async(req,res)=>{
           walletamonunt:walltbalance,
           userOrderData:userorederdata,
         };
+        
         res.json(response)
       })
     }else{
@@ -1066,8 +1071,9 @@ const createorder=async(req,res)=>{
   const request = new paypal.orders.OrdersCreateRequest();
 
   console.log("////////");
-  console.log(req.body.items[0].amount);
-  const balance = req.body.items[0].amount;
+  console.log(typeof req.body.items[0].amount);
+  const balance = parseInt(req.body.items[0].amount);
+  console.log(typeof balance);
 
   console.log(balance,"jj");
   request.prefer("return=representation");
@@ -1091,6 +1097,7 @@ const createorder=async(req,res)=>{
   });
   try {
     console.log(",,,,,,,");
+    console.log(request);
     const order = await paypalCliend.execute(request);
     console.log(".........");
     console.log(order);
